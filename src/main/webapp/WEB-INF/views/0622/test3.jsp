@@ -7,9 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>알림</h1>
-<p>user : ${user}</p>
-<p>${userid}</p>
-<p>${userpw}</p>
+<h1>test3</h1>
+${key} <br>
+${car}
 </body>
 </html>

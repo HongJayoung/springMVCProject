@@ -10,7 +10,7 @@
 <body>
 <h1>/spring/test1.do 요청</h1>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<form action="${path}/spring/test2.do">
+<form action="${path}/spring/test2.do" method="post">
 	아이디 : <input type="text" name="userid" value="admin"><br>
 	비밀번호 : <input type="text" name="userpw" value="1234"><br>
 	<input type="submit" value="로그인">
