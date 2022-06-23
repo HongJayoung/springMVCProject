@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,14 +11,15 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="../css/insertDetailCommon.css">
+<!-- <link rel="stylesheet" href="../css/insertDetailCommon.css"> -->
 
 </head>
 <body>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <h1>BOARD</h1>
 
 <hr>
-<form action="boardUpdate.do" method="post">
+<form action="${path}/board/boardUpdate.do" method="post">
 <div class="form-group">
 	<label>번호 : ${board.getBno()}</label>
 	<input type="hidden" name="bno" value = "${board.getBno()}">
@@ -47,12 +49,12 @@
 	<input class="form-control"  type="text" name="writer" value = "${board.getUpdatedate()}" disabled="disabled">
 </div>
 
-<div class="form-group">
+<%-- <div class="form-group">
 	<label>이미지 : </label>
-	<a href="${pageContext.request.contextPath}/download.do?fileName=${board.pic}">
-		<img src="${pageContext.request.contextPath}/uploads/${board.pic}" alt="이미지" width="250" height="250">
+	<a href="${path}/download.do?fileName=${board.pic}">
+		<img src="${path}/uploads/${board.pic}" alt="이미지" width="250" height="250">
 	</a>
-</div>
+</div> --%>
 
 <input type="submit" class="btn btn-success" value="수정">
 <input type="reset" class="btn btn-secondary" value="취소">

@@ -11,20 +11,31 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <link rel="stylesheet" href="../css/listCommon.css"> -->
 
-<style>
-tr:nth-child(odd) {
-	background-color: #FFF9DD;
-}
-</style>
-
-<link rel="stylesheet" href="../css/listCommon.css">
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(function() {
+	//#은 id, id는 문서 내에서 유일
+	//.은 class
+	$(".btnDel").click(function() {
+		var bno = $(this).attr("data-bno");
+		if(confirm(bno + "번 삭제?")) {
+			location.href = "${path}/board/boardDelete.do?bno="+bno;
+		}
+	})
+	
+	var resultMsg = "${resultMsg}";
+	if(resultMsg != "") alert(resultMsg);
+});
+</script>
 
 </head>
 <body>
 <h1>BOARD LIST</h1>
 <hr>
-<div><span><a class="left" href="boardInsert.do">게시글 작성하기</a></span></div>
+<div><span><a class="left" href="${path}/board/boardInsert.do">게시글 작성하기</a></span></div>
 
 <table>
 	<tr>
@@ -41,8 +52,8 @@ tr:nth-child(odd) {
 	<c:forEach items="${boardDatas}" var="board" varStatus="rowStatus">
 		<%-- <td>${boardSize-rowStatus.index}</td> --%>
 		<td>${listSize - rowStatus.index}</td>
-		<td><a href="boardDetail.do?bno=${board.bno}">${board.bno}</a></td>
-		<td>${board.title}</td>
+		<td>${board.bno}</td>
+		<td><a href="${path}/board/boardDetail.do?bno=${board.bno}">${board.title}</a></td>
 		<td>${board.content}</td>
 		<td>${board.writer}</td>
 		<td>${board.regdate}</td>
@@ -51,18 +62,5 @@ tr:nth-child(odd) {
 	</tr>
 	</c:forEach>
 </table>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-$(function() {
-	//#은 id, id는 문서 내에서 유일
-	//.은 class
-	$(".btnDel").click(function() {
-		var bno = $(this).attr("data-bno");
-		if(confirm(bno + "번 삭제?")) {
-			location.href = "boardDelete.do?bno="+bno;
-		}
-	})
-});
-</script>
 </body>
 </html>
