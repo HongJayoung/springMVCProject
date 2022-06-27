@@ -6,7 +6,7 @@ public class BoardVO {
 	private int bno;
 	private String title;
 	private String content;
-	private int writer;
+	private Integer writer;
 	private Date regdate;
 	private Date updatedate;
 	private String pic;
@@ -15,14 +15,14 @@ public class BoardVO {
 	
 	public BoardVO() {}
 	
-	public BoardVO(String title, String content, int writer) {
+	public BoardVO(String title, String content, Integer writer) {
 		super();
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
 	}
 
-	public BoardVO(int bno, String title, String content, int writer, Date regdate, Date updatedate) {
+	public BoardVO(int bno, String title, String content, Integer writer, Date regdate, Date updatedate) {
 		super();
 		this.bno = bno;
 		this.title = title;
@@ -32,7 +32,7 @@ public class BoardVO {
 		this.updatedate = updatedate;
 	}
 
-	public BoardVO(String title, String content, int writer, EmpVO emp) {
+	public BoardVO(String title, String content, Integer writer, EmpVO emp) {
 		super();
 		this.title = title;
 		this.content = content;
@@ -80,11 +80,11 @@ public class BoardVO {
 		this.content = content;
 	}
 
-	public int getWriter() {
+	public Integer getWriter() {
 		return writer;
 	}
 
-	public void setWriter(int writer) {
+	public void setWriter(Integer writer) {
 		this.writer = writer;
 	}
 

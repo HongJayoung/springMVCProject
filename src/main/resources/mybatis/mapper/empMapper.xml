@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+
+<mapper namespace="net.gasan.emp">
+	<select id="selectAll" resultType="empvo">
+		select * from employees order by 1
+	</select>
+	
+	<select id="selectAllJob" resultType="com.kosta.dto.JobVO">
+		select * from jobs order by 1
+	</select>
+	
+	<select id="selectAllMgr" resultType="empvo">
+		select * from employees where employee_id in (select distinct manager_id from employees)
+	</select>
+	
+	<select id="selectById" parameterType="int" resultType="empvo">
+		select * from employees where employee_id = #{employee_id}
+	</select>
+	
+	<select id="selectByDept" parameterType="int" resultType="empvo">
+		select * from employees where department_id = #{department_id} order by 1
+	</select>
+	
+	<select id="selectByMgr" parameterType="int" resultType="empvo">
+		select * from employees where manager_id = #{manager_id} order by 1
+	</select>
+	
+	<select id="selectByJob" parameterType="String" resultType="empvo">
+		select * from employees where job_id = #{job_id} order by 1
+	</select>
+	
+	<select id="selectByJob" parameterType="String" resultType="empvo">
+		select * from employees where job_id = #{job_id} order by 1
+	</select>
+
+	<insert id="empInsert" parameterType="empvo">
+		insert into employees values(#{employee_id},#{first_name},#{last_name},#{email},
+		#{phone_number},#{hire_date},#{job_id},#{salary},#{commission_pct},#{manager_id},#{department_id})
+	</insert>
+	
+	<update id="empUpdate" parameterType="empvo">
+		update employees set FIRST_NAME = #{first_name}, LAST_NAME = #{last_name}, EMAIL = #{email},
+		PHONE_NUMBER = #{phone_number}, HIRE_DATE =#{hire_date}, JOB_ID = #{job_id}, SALARY = #{salary},
+		COMMISSION_PCT = #{commission_pct}, MANAGER_ID = decode(#{manager_id},0,null,#{manager_id}), 
+		DEPARTMENT_ID = #{department_id} where employee_id = #{employee_id}
+	</update>
+	
+	<update id="empUpdateByDept" parameterType="empvo">
+		update employees set SALARY = #{salary}, COMMISSION_PCT = #{commission_pct}
+		where department_id = #{department_id}
+	</update>
+	
+	<delete id="empDelete" parameterType="int">
+		delete from employees where employee_id = #{employee_id}
+	</delete>
+	
+	<delete id="empDeleteByDept" parameterType="int">
+		delete from employees where department_id = #{department_id}
+	</delete>
+</mapper>

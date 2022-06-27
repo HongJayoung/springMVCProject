@@ -12,8 +12,8 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link rel="stylesheet" href="../css/insertDetailCommon.css">
 
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <script>
 $(function() {
 	$("#empCheckBtn").click(function() {
@@ -23,7 +23,7 @@ $(function() {
 			$("#employee_id").focus(); return;
 		}
 		$.ajax({
-			url:"duplicateCheck.do",
+			url:"${path}/emp/duplicateCheck.do",
 			data:{"empid":empid},
 			type:"get",
 			success: function(resData) {
@@ -41,7 +41,7 @@ $(function() {
 			$("#email").focus(); return;
 		}
 		$.ajax({
-			url:"emailDuplicateCheck.do",
+			url:"${path}/emp/emailDuplicateCheck.do",
 			data:{"email":email},
 			type:"get",
 			success: function(resData) {
@@ -58,11 +58,11 @@ $(function() {
 <h1>NEW EMPLOYEE</h1> 
 
 <hr>
-<form action="empInsert.do" method="post">
+<form action="${path}/emp/empInsert.do" method="post">
 <div class="form-group">
 	<label>직원번호 : </label>
 	<input class="form-control" type="number" name="employee_id" id="employee_id">
-	<input class="btn btn-info" type="button" id="empCheckBtn" value="중복체크">
+	<!-- <input class="btn btn-info" type="button" id="empCheckBtn" value="중복체크"> -->
 	<span id="empMsg"></span>
 </div>
 
@@ -79,7 +79,7 @@ $(function() {
 <div class="form-group">
 	<label>email :</label>
 	<input class="form-control" type="text"  name="email"  id="email">
-	<input class="btn btn-info" type="button" id="emailCheckBtn" value="중복체크">
+	<!-- <input class="btn btn-info" type="button" id="emailCheckBtn" value="중복체크"> -->
 	<span id="emailMsg"></span>
 </div>
 
@@ -96,10 +96,10 @@ $(function() {
 <div class="form-group">
 	<label>manager id :</label>
 		<select class="form-control" name="manager_id">
-		<c:forEach items="${mgrlist}" var="mgr">
-			<option value="${mgr.key}">${mgr.value}</option>
-		</c:forEach>
-	</select>
+			<c:forEach items="${mgrlist}" var="mgr">
+				<option value="${mgr.employee_id}">${mgr.first_name}</option>
+			</c:forEach>
+		</select>
 </div>
 
 <div class="form-group">
@@ -140,7 +140,7 @@ $(function() {
 <script>
 $(function() {
 	$("#emplist").click(function() {
-		location.href="emplist.do";
+		location.href="${path}/emp/empList.do";
 	});
 });
 </script>

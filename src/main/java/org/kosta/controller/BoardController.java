@@ -1,10 +1,13 @@
 package org.kosta.controller;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,19 +26,19 @@ public class BoardController {
 	@Autowired
 	BoardService bservice;
 	
+	Logger logger = LoggerFactory.getLogger(BoardController.class);
+	
 	//목록보기
 	@RequestMapping(value = "/boardList.do")
 	public void boardList(Model model, HttpServletRequest request) {
-		List<BoardVO> blist = bservice.selectAll();
 		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 		
-		String resultMsg = null;
 		if(flashMap !=null) {
-			resultMsg = (String)flashMap.get("resultMsg");
+			String resultMsg = (String)flashMap.get("resultMsg");
 			model.addAttribute("resultMsg", resultMsg);
 		}
 		
-		model.addAttribute("boardDatas", blist);
+		model.addAttribute("boardDatas", bservice.selectAll());
 	}
 	
 	//상세보기
@@ -76,4 +79,29 @@ public class BoardController {
 		
 		return "redirect:/board/boardList.do";
 	}
+	
+	//title로 조회
+	@RequestMapping("/titleSearch.do")
+	public String titleSearch(String title, Model model) {
+		List<BoardVO> blist = bservice.selectByTitle("%"+title+"%");
+		model.addAttribute("boardDatas", blist);
+		return "board/boardListFrame";
+	}
+	
+	//writer로 조회
+	@RequestMapping("/writerSearch.do")
+	public String writerSearch(Integer writer, Model model) {
+		List<BoardVO> blist = bservice.selectByWriter(writer);
+		model.addAttribute("boardDatas", blist);
+		return "board/boardListFrame";
+	}
+	
+	//date로 조회
+	@RequestMapping("/dateSearch.do")
+	public String dateSearch(Date sdate, Date edate , Model model) {
+		List<BoardVO> blist = bservice.selectByRegdate(sdate, edate);
+		model.addAttribute("boardDatas", blist);
+		return "board/boardListFrame";
+	}
+	
 }

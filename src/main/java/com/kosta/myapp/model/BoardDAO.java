@@ -28,7 +28,6 @@ public class BoardDAO {
 	static final String SQL_INSERT = "insert into tbl_board values(seq_bno.nextval, ?, ?, ?, sysdate, sysdate, ?)";
 	static final String SQL_UPDATE = "update tbl_board set title = ?, content = ?, updatedate = sysdate where bno = ?";
 	static final String SQL_DELETE = "delete from tbl_board where bno = ?";
-	static final String SQL_DELETE_BY_ID = "delete from tbl_board where writer = ?";
 	static final String SQL_BOARD_EMP = "SELECT b.bno, b.title, b.CONTENT, e.FIRST_NAME||' '|| e.LAST_NAME name"
 										+ " FROM tbl_board b JOIN employees e ON (b.WRITER = e.EMPLOYEE_ID) order by 1 desc";
 	
@@ -228,24 +227,7 @@ public class BoardDAO {
 		
 		return result;
 	}
-	
-	//9. �ۼ��ڷ� ����
-	public int deleteBoardById(int writer) {
 
-		try {
-			conn = ds.getConnection();
-			pst = conn.prepareStatement(SQL_DELETE_BY_ID);
-			pst.setInt(1, writer);
-			result = pst.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBUtil.dbClose(rs, pst, conn);
-		}
-		
-		return result;
-	}
-	
 	private BoardVO makeBoard(ResultSet rs) throws SQLException {
 		BoardVO board = new BoardVO();
 		board.setBno(rs.getInt(1));

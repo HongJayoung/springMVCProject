@@ -28,39 +28,78 @@ $(function() {
 	
 	var resultMsg = "${resultMsg}";
 	if(resultMsg != "") alert(resultMsg);
-});
+	
+	
+	function call(url, sendData) {
+		$.ajax({
+			url:url,
+			data:sendData,
+			success:function(resData) {
+				$("#here").html(resData);
+			},
+			fail:function() {
+				
+			}
+		})
+	}
+	
+	//SPA(Single Page Application)
+	$("#titleBtn").click(function() {
+		//alert("titleBtn 누름");
+		call("${path}/board/titleSearch.do", {title:$("#inputData").val()});
+	});
+	
+	$("#writerBtn").click(function() {
+		//alert($("#inputData").val());
+		call("${path}/board/writerSearch.do", {writer:$("#inputData").val()});
+	});
+	
+	$("#dateBtn").click(function() {
+		//alert("dateBtn 누름");
+		call("${path}/board/dateSearch.do", {sdate:$("#sdate").val(), edate:$("#edate").val()});
+	});
+})
 </script>
 
 </head>
 <body>
 <h1>BOARD LIST</h1>
 <hr>
-<div><span><a class="left" href="${path}/board/boardInsert.do">게시글 작성하기</a></span></div>
+<a class="left" href="${path}/board/boardInsert.do">게시글 작성하기</a> <br>
+<input type="text" id="inputData">
+<button id="titleBtn">title로 조회</button>
+<button id="writerBtn">writer로 조회</button> <br>
+<input type="date" id="sdate"> ~ <input type="date" id="edate">
+<button id="dateBtn">작성일로 조회</button>
+<hr>
 
-<table>
-	<tr>
-		<td>순서</td>
-		<td>번호</td>
-		<td>제목</td>
-		<td>내용</td>
-		<td>작성자</td>
-		<td>작성일</td>
-		<td>수정일</td>
-		<td></td>
-	</tr>
-	<c:set var="listSize" value="${boardDatas.size()}"></c:set>
-	<c:forEach items="${boardDatas}" var="board" varStatus="rowStatus">
-		<%-- <td>${boardSize-rowStatus.index}</td> --%>
-		<td>${listSize - rowStatus.index}</td>
-		<td>${board.bno}</td>
-		<td><a href="${path}/board/boardDetail.do?bno=${board.bno}">${board.title}</a></td>
-		<td>${board.content}</td>
-		<td>${board.writer}</td>
-		<td>${board.regdate}</td>
-		<td>${board.updatedate}</td>
-		<td><button class="btnDel btn btn-outline-secondary" data-bno="${board.bno}">삭제</button></td>
-	</tr>
-	</c:forEach>
-</table>
+<div id="here">
+	<table>
+		<tr>
+			<td>순서</td>
+			<td>번호</td>
+			<td>제목</td>
+			<td>내용</td>
+			<td>작성자</td>
+			<td>작성일</td>
+			<td>수정일</td>
+			<td></td>
+		</tr>
+		<c:set var="listSize" value="${boardDatas.size()}"></c:set>
+		<c:forEach items="${boardDatas}" var="board" varStatus="rowStatus">
+		<tr>
+			<%-- <td>${boardSize-rowStatus.index}</td> --%>
+			<td>${listSize - rowStatus.index}</td>
+			<td>${board.bno}</td>
+			<td><a href="${path}/board/boardDetail.do?bno=${board.bno}">${board.title}</a></td>
+			<td>${board.content}</td>
+			<td>${board.writer}</td>
+			<td>${board.regdate}</td>
+			<td>${board.updatedate}</td>
+			<td><button class="btnDel btn btn-outline-secondary" data-bno="${board.bno}">삭제</button></td>
+		</tr>
+		</c:forEach>
+	</table>
+</div>
 </body>
 </html>
