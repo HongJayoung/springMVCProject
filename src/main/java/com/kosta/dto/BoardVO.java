@@ -2,6 +2,8 @@ package com.kosta.dto;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class BoardVO {
 	private int bno;
 	private String title;
@@ -10,6 +12,7 @@ public class BoardVO {
 	private Date regdate;
 	private Date updatedate;
 	private String pic;
+	private MultipartFile photos;
 	
 	private EmpVO emp; 
 	
@@ -38,6 +41,14 @@ public class BoardVO {
 		this.content = content;
 		this.writer = writer;
 		this.emp = emp;
+	}
+
+	public MultipartFile getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(MultipartFile photos) {
+		this.photos = photos;
 	}
 
 	public String getPic() {

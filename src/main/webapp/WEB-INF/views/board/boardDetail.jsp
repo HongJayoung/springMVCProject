@@ -11,11 +11,12 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-<!-- <link rel="stylesheet" href="../css/insertDetailCommon.css"> -->
+
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<link rel="stylesheet" href="${path}/css/common.css">
 
 </head>
 <body>
-<c:set var="path" value="${pageContext.request.contextPath}"/>
 <h1>BOARD</h1>
 
 <hr>
@@ -49,12 +50,17 @@
 	<input class="form-control"  type="text" name="writer" value = "${board.getUpdatedate()}" disabled="disabled">
 </div>
 
-<%-- <div class="form-group">
+<div class="form-group">
 	<label>이미지 : </label>
-	<a href="${path}/download.do?fileName=${board.pic}">
-		<img src="${path}/uploads/${board.pic}" alt="이미지" width="250" height="250">
-	</a>
-</div> --%>
+	<c:if test="${board.pic == null}">
+		등록된 이미지가 없습니다.
+	</c:if>
+	<c:if test="${board.pic != null}">
+		<a href="${path}/download.do?fileName=${board.pic}">
+			<img src="${path}/uploads/${board.pic}" alt="이미지" width="250" height="250">
+		</a>
+	</c:if>
+</div>
 
 <input type="submit" class="btn btn-success" value="수정">
 <input type="reset" class="btn btn-secondary" value="취소">

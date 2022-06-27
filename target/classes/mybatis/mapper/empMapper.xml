@@ -33,8 +33,21 @@
 		select * from employees where job_id = #{job_id} order by 1
 	</select>
 	
-	<select id="selectByJob" parameterType="String" resultType="empvo">
-		select * from employees where job_id = #{job_id} order by 1
+	<select id="emailDup" parameterType="String" resultType="int">
+		select count(*) from employees where email = #{email}
+	</select>
+
+	<select id="selectByCondition" parameterType="map" resultType="empvo">
+		select * from employees where salary >= #{salary}
+		<if test="dept_id!=0">
+			and department_id = #{dept_id}
+		</if>
+		<if test="job_id!=null">
+			and job_id = #{job_id}
+		</if>
+		<if test="hire_date!=null">
+			and hire_date >= #{hire_date}
+		</if>
 	</select>
 
 	<insert id="empInsert" parameterType="empvo">
@@ -47,11 +60,6 @@
 		PHONE_NUMBER = #{phone_number}, HIRE_DATE =#{hire_date}, JOB_ID = #{job_id}, SALARY = #{salary},
 		COMMISSION_PCT = #{commission_pct}, MANAGER_ID = decode(#{manager_id},0,null,#{manager_id}), 
 		DEPARTMENT_ID = #{department_id} where employee_id = #{employee_id}
-	</update>
-	
-	<update id="empUpdateByDept" parameterType="empvo">
-		update employees set SALARY = #{salary}, COMMISSION_PCT = #{commission_pct}
-		where department_id = #{department_id}
 	</update>
 	
 	<delete id="empDelete" parameterType="int">

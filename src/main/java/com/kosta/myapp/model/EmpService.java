@@ -35,6 +35,10 @@ public class EmpService {
 		return empDAO.selectByJob(job_id);
 	}
 
+	//5.조건조회(특정department_id, job_id, salary>=, hire_date>=)
+	public List<EmpVO> selectByCondition(int deptid, String job_id, double sal, String hire_hate) {
+		return empDAO.selectByCondition(deptid, job_id, sal, hire_hate);
+	}
 	//6.Ư������1����ȸ
 	public EmpVO selectById(int employee_id) {
 		return empDAO.selectById(employee_id);
@@ -48,11 +52,6 @@ public class EmpService {
 	//8.update(Ư������1�� employee_id=?)
 	public int empUpdate(EmpVO emp) {
 		return empDAO.empUpdate(emp);
-	}
-	
-	//9.update(���� department_id=?)
-	public int empUpdateByDept(EmpVO emp) {
-		return empDAO.empUpdateByDept(emp);
 	}
 	
 	//10.delete(Ư������1�� employee_id=?)
@@ -73,5 +72,10 @@ public class EmpService {
 	//13.모든 메니저 조회
 	public List<EmpVO> selectAllMgr() {
 		return empDAO.selectAllMgr();
+	}
+	
+	//14. 이메일 중복체크
+	public int emailDup(String email) {
+		return empDAO.emailDup(email);
 	}
 }

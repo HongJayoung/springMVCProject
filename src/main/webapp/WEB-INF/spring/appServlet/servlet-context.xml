@@ -14,7 +14,7 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<!-- html, css, javascript, image -->
-	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -24,6 +24,10 @@
 	
 	<!-- @Component, @Repository, @Service -->
 	<context:component-scan base-package="com.kosta.myapp, net.kosta.controller, org.kosta" />
+	
+	<bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <property name="maxUploadSize" value="10000000"/>
+	</bean>
 	
 	<!-- 	
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">

@@ -1,5 +1,7 @@
 package org.kosta.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -64,7 +67,22 @@ public class BoardController {
 	
 	//등록하기
 	@RequestMapping(value = "/boardInsert.do", method = RequestMethod.POST)
-	public String boardInsert(BoardVO board, RedirectAttributes redirectAttr) {
+	public String boardInsert(BoardVO board, RedirectAttributes redirectAttr, HttpServletRequest request) {
+		MultipartFile uploadfile = board.getPhotos(); 
+		
+		if (uploadfile == null) return "redirect:/board/boardList.do"; 
+		String path = request.getSession().getServletContext().getRealPath("/resources/uploads"); 
+		String fileName = uploadfile.getOriginalFilename(); 
+		String fpath = path +"\\" + fileName ;
+		board.setPic(fileName); 
+		
+		try {
+			File file = new File(fpath); 
+			uploadfile.transferTo(file); 
+		} catch (IOException e) {
+			e.printStackTrace(); 
+		} 
+
 		int result = bservice.newBoard(board);
 		redirectAttr.addFlashAttribute("resultMsg", result+"건 입력");
 		
